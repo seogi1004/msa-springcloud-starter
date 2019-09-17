@@ -7,7 +7,6 @@ import java.util.HashSet
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 import com.brownfield.booking.component.BookingComponent
@@ -16,6 +15,7 @@ import com.brownfield.booking.entity.Inventory
 import com.brownfield.booking.entity.Passenger
 import com.brownfield.booking.repository.BookingRepository
 import com.brownfield.booking.repository.InventoryRepository
+import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class BookingApplication : CommandLineRunner {
@@ -50,10 +50,9 @@ class BookingApplication : CommandLineRunner {
 
     companion object {
         private val logger = LoggerFactory.getLogger(BookingApplication::class.java)
-
-        @JvmStatic
-        fun main(args: Array<String>) {
-            SpringApplication.run(BookingApplication::class.java, *args)
-        }
     }
+}
+
+fun main(args: Array<String>) {
+    runApplication<BookingApplication>(*args)
 }
