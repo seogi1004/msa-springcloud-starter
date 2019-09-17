@@ -1,0 +1,1 @@
+# spring-msa-starter
