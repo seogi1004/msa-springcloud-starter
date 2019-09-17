@@ -1,4 +1,4 @@
-package com.brownfield.pss.booking.component
+package com.brownfield.booking.component
 
 object BookingStatus {
     const val BOOKING_CONFIRMED = "BOOKING_CONFIRMED"

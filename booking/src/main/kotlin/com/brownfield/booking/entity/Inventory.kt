@@ -1,4 +1,4 @@
-package com.brownfield.pss.booking.entity
+package com.brownfield.booking.entity
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue

@@ -1,4 +1,4 @@
-package com.brownfield.pss.booking
+package com.brownfield.booking
 
 import java.util.Arrays
 import java.util.Date
@@ -10,12 +10,12 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
-import com.brownfield.pss.booking.component.BookingComponent
-import com.brownfield.pss.booking.entity.BookingRecord
-import com.brownfield.pss.booking.entity.Inventory
-import com.brownfield.pss.booking.entity.Passenger
-import com.brownfield.pss.booking.repository.BookingRepository
-import com.brownfield.pss.booking.repository.InventoryRepository
+import com.brownfield.booking.component.BookingComponent
+import com.brownfield.booking.entity.BookingRecord
+import com.brownfield.booking.entity.Inventory
+import com.brownfield.booking.entity.Passenger
+import com.brownfield.booking.repository.BookingRepository
+import com.brownfield.booking.repository.InventoryRepository
 
 @SpringBootApplication
 class BookingApplication : CommandLineRunner {

@@ -1,4 +1,4 @@
-package com.brownfield.pss.booking.component
+package com.brownfield.booking.component
 
 import java.util.Date
 import java.util.HashMap
@@ -9,9 +9,9 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 
-import com.brownfield.pss.booking.entity.BookingRecord
-import com.brownfield.pss.booking.repository.BookingRepository
-import com.brownfield.pss.booking.repository.InventoryRepository
+import com.brownfield.booking.entity.BookingRecord
+import com.brownfield.booking.repository.BookingRepository
+import com.brownfield.booking.repository.InventoryRepository
 
 @Component
 class BookingComponent @Autowired

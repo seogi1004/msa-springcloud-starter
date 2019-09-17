@@ -1,4 +1,4 @@
-package com.brownfield.pss.booking
+package com.brownfield.booking
 
 import org.junit.Test
 import org.junit.runner.RunWith
