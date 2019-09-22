@@ -13,8 +13,10 @@ import com.brownfield.search.entity.Flight
 import com.brownfield.search.entity.Inventory
 import com.brownfield.search.repository.FlightRepository
 import org.springframework.boot.runApplication
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 
 @SpringBootApplication
+@EnableDiscoveryClient
 class SearchApplication : CommandLineRunner {
 
     @Autowired

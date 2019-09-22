@@ -11,8 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import com.brownfield.checkin.entity.CheckInRecord
 import com.brownfield.checkin.repository.CheckinRepository
 import org.springframework.boot.runApplication
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 
 @SpringBootApplication
+@EnableDiscoveryClient
 class CheckinApplication : CommandLineRunner {
 
     @Autowired

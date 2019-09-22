@@ -11,8 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import com.brownfield.fares.entity.Fare
 import com.brownfield.fares.repository.FaresRepository
 import org.springframework.boot.runApplication
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 
 @SpringBootApplication
+@EnableDiscoveryClient
 class FaresApplication : CommandLineRunner {
     @Autowired
     internal var faresRepository: FaresRepository? = null

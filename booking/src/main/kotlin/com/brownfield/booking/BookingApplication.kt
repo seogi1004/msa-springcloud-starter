@@ -16,8 +16,10 @@ import com.brownfield.booking.entity.Passenger
 import com.brownfield.booking.repository.BookingRepository
 import com.brownfield.booking.repository.InventoryRepository
 import org.springframework.boot.runApplication
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 
 @SpringBootApplication
+@EnableDiscoveryClient
 class BookingApplication : CommandLineRunner {
     @Autowired
     private val bookingRepository: BookingRepository? = null
