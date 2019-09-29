@@ -96,6 +96,6 @@ constructor(internal var bookingRepository: BookingRepository,
 
     companion object {
         private val logger = LoggerFactory.getLogger(BookingComponent::class.java)
-        private val FareURL = "http://localhost:8080"
+        private val FareURL = "http://fares-apigateway/api"
     }
 }

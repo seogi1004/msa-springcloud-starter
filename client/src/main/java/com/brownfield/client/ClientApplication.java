@@ -49,7 +49,7 @@ public class ClientApplication implements CommandLineRunner {
 
 
 
-        Flight[] flights = searchClient.postForObject("http://search-service/search/get", searchQuery, Flight[].class);
+        Flight[] flights = searchClient.postForObject("http://search-apigateway/api/search/get", searchQuery, Flight[].class);
 
         Arrays.asList(flights).forEach(flight -> logger.info(" flight >"+ flight));
 
@@ -66,7 +66,7 @@ public class ClientApplication implements CommandLineRunner {
         booking.setPassengers(passengers);
         long bookingId =0;
         try {
-            bookingId = bookingClient.postForObject("http://booking-service/booking/create", booking, long.class);
+            bookingId = bookingClient.postForObject("http://booking-apigateway/api/booking/create", booking, long.class);
             logger.info("Booking created "+ bookingId);
         }catch (Exception e){
             logger.error("BOOKING SERVICE NOT AVAILABLE...!!!");
@@ -76,7 +76,7 @@ public class ClientApplication implements CommandLineRunner {
         if(bookingId == 0) return;
         try {
             CheckInRecord checkIn = new CheckInRecord("Franc", "Gavin", "28C", null, "BF101","22-JAN-18", bookingId);
-            long checkinId = checkInClient.postForObject("http://checkin-service/checkin/create", checkIn, long.class);
+            long checkinId = checkInClient.postForObject("http://checkin-apigateway/api/checkin/create", checkIn, long.class);
             logger.info("Checked IN "+ checkinId);
         }catch (Exception e){
             logger.error("CHECK IN SERVICE NOT AVAILABLE...!!!");

@@ -37,7 +37,7 @@ public class BrownFieldSiteController {
 
    @RequestMapping(value="/search", method=RequestMethod.POST)
    public String greetingSubmit(@ModelAttribute UIData uiData, Model model) {
-		Flight[] flights = searchClient.postForObject("http://search-service/search/get", uiData.getSearchQuery(), Flight[].class);
+		Flight[] flights = searchClient.postForObject("http://search-apigateway/api/search/get", uiData.getSearchQuery(), Flight[].class);
 		uiData.setFlights(Arrays.asList(flights));
 		model.addAttribute("uidata", uiData);
        return "result";
@@ -70,7 +70,7 @@ public class BrownFieldSiteController {
 	 		booking.setPassengers(passengers);
 		long bookingId =0;
 		try { 
-			 bookingId = bookingClient.postForObject("http://booking-service/booking/create", booking, long.class);
+			 bookingId = bookingClient.postForObject("http://booking-apigateway/api/booking/create", booking, long.class);
 			logger.info("Booking created "+ bookingId);
 		}catch (Exception e){
 			logger.error("BOOKING SERVICE NOT AVAILABLE...!!!");
@@ -89,7 +89,7 @@ public class BrownFieldSiteController {
 	@RequestMapping(value="/search-booking-get", method=RequestMethod.POST)
 	public String searchBookingSubmit(@ModelAttribute UIData uiData, Model model) {
 		Long id = new Long(uiData.getBookingid());
- 		BookingRecord booking = bookingClient.getForObject("http://booking-service/booking/get/"+id, BookingRecord.class);
+ 		BookingRecord booking = bookingClient.getForObject("http://booking-apigateway/api/booking/get/"+id, BookingRecord.class);
 		Flight flight = new Flight(booking.getFlightNumber(), booking.getOrigin(),booking.getDestination()
 				,booking.getFlightDate(),new Fares(booking.getFare(),"AED"));
 		Passenger pax = booking.getPassengers().iterator().next();
@@ -117,7 +117,7 @@ public class BrownFieldSiteController {
 			CheckInRecord checkIn = new CheckInRecord(firstName, lastName, "28C", null,
 					  									flightDate,flightDate, new Long(bookingid).longValue());
 
-			long checkinId = checkInClient.postForObject("http://checkin-service/checkin/create", checkIn, long.class);
+			long checkinId = checkInClient.postForObject("http://checkin-apigateway/api/checkin/create", checkIn, long.class);
 	   		model.addAttribute("message","Checked In, Seat Number is 28c , checkin id is "+ checkinId);
 	       return "checkinconfirm"; 
 	}	
