@@ -1,23 +1,50 @@
 package com.brownfield.search.component
 
-import org.springframework.amqp.core.Queue
-import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Bean
+import org.springframework.cloud.stream.annotation.EnableBinding
+import org.springframework.cloud.stream.annotation.Input
+import org.springframework.integration.annotation.ServiceActivator
+import org.springframework.messaging.MessageChannel
 import org.springframework.stereotype.Component
 
 @Component
-class Receiver @Autowired
-constructor(internal var searchComponent: SearchComponent) {
-    @Bean
-    internal fun queue(): Queue {
-        return Queue("SearchQ", false)
-    }
+@EnableBinding(SearchSink::class)
+class Receiver {
 
-    @RabbitListener(queues = ["SearchQ"])
-    fun processMessage(fare: Map<String, Any>) {
-        println(fare)
-        searchComponent.updateInventory(fare["FLIGHT_NUMBER"] as String, fare["FLIGHT_DATE"] as String, fare["NEW_INVENTORY"] as Int)
-        //call repository and update the fare for the given flight
+    @Autowired
+    internal var searchComponent: SearchComponent? = null
+
+    /**
+     *
+     * public Receiver(SearchComponent searchComponent){
+     * this.searchComponent = searchComponent;
+     * }
+     * @Bean
+     * Queue queue() {
+     * return new Queue("InventoryQ", false);
+     * }
+     * @RabbitListener(queues = "InventoryQ")
+     * public void processMessage(Map<String></String>,Object> fare) {
+     * searchComponent.updateInventory((String)fare.get("FLIGHT_NUMBER"),(String)fare.get("FLIGHT_DATE"),(int)fare.get("NEW_INVENTORY"));
+     * //call repository and update the fare for the given flight
+     * }
+     */
+
+    @ServiceActivator(inputChannel = SearchSink.InventoryQ)
+    fun accept(fare: Map<String, Any>) {
+        searchComponent!!.updateInventory(
+                fare["FLIGHT_NUMBER"] as String,
+                fare["FLIGHT_DATE"] as String,
+                fare["NEW_INVENTORY"] as Int
+        )
+    }
+}
+
+internal interface SearchSink {
+    @Input("inventoryQ")
+    fun inventoryQ(): MessageChannel
+
+    companion object {
+        const val InventoryQ = "inventoryQ"
     }
 }

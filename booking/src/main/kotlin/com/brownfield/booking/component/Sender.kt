@@ -1,26 +1,51 @@
 package com.brownfield.booking.component
 
-import org.springframework.amqp.core.Queue
-import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Bean
+import org.springframework.cloud.context.config.annotation.RefreshScope
+import org.springframework.cloud.stream.annotation.EnableBinding
+import org.springframework.cloud.stream.annotation.Output
+import org.springframework.messaging.MessageChannel
+import org.springframework.messaging.support.MessageBuilder
 import org.springframework.stereotype.Component
 
+
+@RefreshScope
 @Component
-class Sender @Autowired
-internal constructor(internal var template: RabbitMessagingTemplate) {
-    @Bean
-    internal fun queue(): Queue {
-        return Queue("SearchQ", false)
-    }
+@EnableBinding(BookingSource::class)
+class Sender {
 
-    @Bean
-    internal fun queue1(): Queue {
-        return Queue("CheckINQ", false)
-    }
+    /**	RabbitMessagingTemplate template;
+     *
+     * @Autowired
+     * Sender(RabbitMessagingTemplate template){
+     * this.template = template;
+     * }
+     * @Bean
+     * Queue queue() {
+     * return new Queue("InventoryQ", false);
+     * }
+     * @Bean
+     * Queue queue1() {
+     * return new Queue("CheckInQ", false);
+     * }
+     */
 
+    @Output(BookingSource.InventoryQ)
+    @Autowired
+    private val messageChannel: MessageChannel? = null
 
     fun send(message: Any) {
-        template.convertAndSend("SearchQ", message)
+        //template.convertAndSend("InventoryQ", message);
+        messageChannel!!.send(MessageBuilder.withPayload(message).build())
     }
+}
+
+internal interface BookingSource {
+    @Output("inventoryQ")
+    fun inventoryQ(): MessageChannel
+
+    companion object {
+        const val InventoryQ = "inventoryQ"
+    }
+
 }
